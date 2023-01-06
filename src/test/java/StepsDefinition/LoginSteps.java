@@ -2,6 +2,8 @@ package StepsDefinition;
 
 import Pages.LoginPage;
 import Pages.RegistrationPage;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,8 +17,8 @@ public class LoginSteps {
     LoginPage loginPage;
 
 
-    @Given("user should open browser and navigates to login page")
-    public void NavigateToLoginPage() {
+    @Before
+    public void OpenHomeLogin() {
         String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", chromePath);
 
@@ -55,4 +57,11 @@ public class LoginSteps {
 
         Assert.assertEquals(actualResult, expectedResult);
     }
+
+    @After
+    public void CloseBrowserLogin(){
+
+        driver.quit();
+    }
+
 }

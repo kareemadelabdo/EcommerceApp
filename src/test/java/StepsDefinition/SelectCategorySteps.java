@@ -3,6 +3,7 @@ package StepsDefinition;
 import Pages.LoginPage;
 import Pages.SelectCategoryPage;
 import Pages.SwitchCurrenciesPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -49,6 +50,7 @@ public class SelectCategorySteps {
         String actualResult = selectCategoryPage.getResult().getText();
         Assert.assertEquals(expectedResult,actualResult);
     }
+
 
 
 }

@@ -1,7 +1,7 @@
 Feature: user should be able to create successful order
 
   Scenario: user should login then make a successful order
-    
+
     Given user should open website
     When user should login with valid credentials
     And user should choose apparel shoes item then add to cart

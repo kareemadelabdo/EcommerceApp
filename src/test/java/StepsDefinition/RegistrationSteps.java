@@ -4,7 +4,6 @@ import Pages.RegistrationPage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
@@ -15,24 +14,20 @@ public class RegistrationSteps {
     WebDriver driver = null;
     RegistrationPage registrationPage;
 
-    @Given("user should open browser")
-    public void OpenBrowser() {
+    @Before
+    public void NavigateToWebsite(){
         String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", chromePath);
 
         driver = new ChromeDriver();
         registrationPage = new RegistrationPage(driver);
         driver.manage().window().maximize();
-    }
-
-    @And("user should navigate to registration page")
-    public void NavigateToWebsite() {
         driver.navigate().to("https://demo.nopcommerce.com/register?returnUrl=%2F");
     }
 
-    @When("user enters valid data")
-    public void UserEntersValidData() {
-        registrationPage.RegistrationSteps("karkar", "adel", "abdo2@outlook.com", "companyX", "123456", "123456");
+    @When("^user enters valid data \"(.*)\"and\"(.*)\"and\"(.*)\"and\"(.*)\"and\"(.*)\"and\"(.*)\"$")
+    public void UserEntersValidData(String firstname,String lastname,String email,String company,String password , String confirmPass) {
+        registrationPage.RegistrationSteps(firstname, lastname, email, company, password, confirmPass);
     }
 
     @And("user click on register button")
@@ -62,7 +57,7 @@ public class RegistrationSteps {
         String actualResult = registrationPage.firstNameError.getText();
         String expectedResult = "First name is required.";
 
-        Assert.assertNotEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Then("verify that lastname is required")
@@ -70,7 +65,7 @@ public class RegistrationSteps {
         String actualResult = registrationPage.lastNameError.getText();
         String expectedResult = "Last name is required.";
 
-        Assert.assertNotEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Then("verify that email is required")
@@ -78,15 +73,15 @@ public class RegistrationSteps {
         String actualResult = registrationPage.emailError.getText();
         String expectedResult = "Email is required.";
 
-        Assert.assertNotEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Then("verify that password is required")
     public void RequiredPassword() {
         String actualResult = registrationPage.passwordError.getText();
-        String expectedResult = "Password is required.";
+        String expectedResult = "The password and confirmation password do not match.";
 
-        Assert.assertNotEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Then("verify that confirm password is required")
@@ -94,7 +89,13 @@ public class RegistrationSteps {
         String actualResult = registrationPage.confirmPasswordError.getText();
         String expectedResult = "Password is required.";
 
-        Assert.assertNotEquals(expectedResult, actualResult);
+        Assert.assertEquals(expectedResult, actualResult);
+    }
+
+    @After
+    public void CloseRegistrationBrowser(){
+
+        driver.quit();
     }
 
 

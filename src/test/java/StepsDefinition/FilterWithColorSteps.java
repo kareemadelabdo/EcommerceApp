@@ -2,6 +2,7 @@ package StepsDefinition;
 
 import Pages.FilterWithColorPage;
 import Pages.SelectCategoryPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -36,4 +37,5 @@ public class FilterWithColorSteps {
 
         filterWithColorPage.ChooseColor();
     }
+
 }

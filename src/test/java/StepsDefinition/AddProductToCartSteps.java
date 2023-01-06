@@ -1,6 +1,7 @@
 package StepsDefinition;
 
 import Pages.AddToCartPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -45,4 +46,5 @@ public class AddProductToCartSteps {
         String actualResult = addToCartPage.getSuccessMsg().getText();
         Assert.assertTrue(actualResult.contains(expectedResult));
     }
+
 }

@@ -2,6 +2,7 @@ package StepsDefinition;
 
 import Pages.AddToCartPage;
 import Pages.AddToWishlistPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -45,4 +46,5 @@ public class AddProductToWishlistSteps {
         String actualResult = addToWishlistPage.getSuccessMsg().getText();
         Assert.assertTrue(actualResult.contains(expectedResult));
     }
+
 }

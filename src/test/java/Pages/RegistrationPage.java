@@ -38,7 +38,7 @@ public class RegistrationPage {
     public WebElement lastNameError;
     @FindBy(id = "Email-error")
     public WebElement emailError;
-    @FindBy(id = "Password-error")
+    @FindBy(id = "ConfirmPassword-error")
     public WebElement passwordError;
     @FindBy(id = "ConfirmPassword-error")
     public WebElement confirmPasswordError;

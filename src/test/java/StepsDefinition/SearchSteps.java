@@ -2,6 +2,7 @@ package StepsDefinition;
 
 import Pages.LoginPage;
 import Pages.SearchPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -64,6 +65,7 @@ public class SearchSteps {
 
         Assert.assertEquals(actualResult, expectedResult);
     }
+
 
 
 

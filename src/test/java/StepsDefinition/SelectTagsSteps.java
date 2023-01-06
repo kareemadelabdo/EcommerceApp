@@ -3,6 +3,7 @@ package StepsDefinition;
 import Pages.LoginPage;
 import Pages.SearchPage;
 import Pages.SelectTagsPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -44,4 +45,5 @@ public class SelectTagsSteps {
 
         Assert.assertEquals(expectedResult,actualResult);
     }
+
 }

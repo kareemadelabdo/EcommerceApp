@@ -3,6 +3,7 @@ package StepsDefinition;
 import Pages.LoginPage;
 import Pages.RegistrationPage;
 import Pages.ResetPasswordPage;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -85,6 +86,7 @@ public class ResetPasswordSteps {
         String expectedResult = resetPasswordPage.emailFormatError.getText();
         Assert.assertEquals(actualResult, expectedResult);
     }
+
 
 
 }
