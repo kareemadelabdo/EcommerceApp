@@ -1,5 +1,6 @@
 package StepsDefinition;
 
+import Helper.BaseClass;
 import Pages.AddToCartPage;
 import Pages.AddToWishlistPage;
 import io.cucumber.java.After;
@@ -14,24 +15,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class AddProductToWishlistSteps {
 
 
-    WebDriver driver = null;
+    WebDriver driver;
     AddToWishlistPage addToWishlistPage;
-    @Given("user should go to website homepage")
-    public void UserNavigateToWebsite() {
-        String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", chromePath);
-        driver = new ChromeDriver();
-        addToWishlistPage = new AddToWishlistPage(driver);
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demo.nopcommerce.com/");
+
+    BaseClass base;
+
+    public AddProductToWishlistSteps(BaseClass base) {
+        this.base = base;
     }
+
+
     @And("user choose apparel then shoes")
     public void UserChooseSubCategoryItem() {
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/");
+        addToWishlistPage = new AddToWishlistPage(base.getDriver());
         addToWishlistPage.selectSubCategory();
     }
 
     @When("user should choose color then add shoes to cart and go to cart page to view it")
     public void AddToWishlist() throws InterruptedException {
+        addToWishlistPage = new AddToWishlistPage(base.getDriver());
         addToWishlistPage.FirstAddToCart();
         Thread.sleep(2000);
         addToWishlistPage.ChooseColor();
@@ -42,6 +45,7 @@ public class AddProductToWishlistSteps {
     @Then("wishlist success message should appear")
     public void WishlistSuccessMessage() throws InterruptedException {
 
+        addToWishlistPage = new AddToWishlistPage(base.getDriver());
         String expectedResult = "The product has been added to your";
         String actualResult = addToWishlistPage.getSuccessMsg().getText();
         Assert.assertTrue(actualResult.contains(expectedResult));

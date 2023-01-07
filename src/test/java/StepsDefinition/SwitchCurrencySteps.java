@@ -1,5 +1,6 @@
 package StepsDefinition;
 
+import Helper.BaseClass;
 import Pages.LoginPage;
 import Pages.SearchPage;
 import Pages.SwitchCurrenciesPage;
@@ -15,23 +16,19 @@ import org.openqa.selenium.support.ui.Select;
 
 public class SwitchCurrencySteps {
 
-    WebDriver driver = null;
+    WebDriver driver;
     SwitchCurrenciesPage switchCurrenciesPage;
 
-    @Given("navigate to website")
-    public void UserNavigateToLoginPage() {
-        String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", chromePath);
-        driver = new ChromeDriver();
-        switchCurrenciesPage = new SwitchCurrenciesPage(driver);
+    BaseClass base;
 
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demo.nopcommerce.com/");
+    public SwitchCurrencySteps(BaseClass base) {
+        this.base = base;
     }
 
-    @When("user change currency from dollar to euro")
+    @Given("user change currency from dollar to euro")
     public void ChangeCurrency() {
-
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/");
+        switchCurrenciesPage = new SwitchCurrenciesPage(base.getDriver());
         switchCurrenciesPage.setCurrencyToEuro();
         switchCurrenciesPage.setCurrencyToDollar();
     }

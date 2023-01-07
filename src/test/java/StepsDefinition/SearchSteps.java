@@ -1,5 +1,6 @@
 package StepsDefinition;
 
+import Helper.BaseClass;
 import Pages.LoginPage;
 import Pages.SearchPage;
 import io.cucumber.java.After;
@@ -15,41 +16,41 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class SearchSteps {
 
-    WebDriver driver = null;
+    WebDriver driver;
     SearchPage searchPage;
-    LoginPage loginPage ;
+    LoginPage loginPage;
 
+    BaseClass base;
 
-    @Given("user open browser and navigates to login page")
-    public void UserNavigateToLoginPage() {
-        String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", chromePath);
-        driver = new ChromeDriver();
-        searchPage = new SearchPage(driver);
-        loginPage = new LoginPage(driver);
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demo.nopcommerce.com/login?returnUrl=%2F");
+    public SearchSteps(BaseClass base) {
+        this.base = base;
     }
 
-    @And("user should login successfully with valid email and password")
-    public void LoginSuccessfully(){
-
+    @Given("user should login successfully with valid email and password")
+    public void LoginSuccessfully() {
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/login?returnUrl=%2F");
+        loginPage = new LoginPage(base.getDriver());
         loginPage.loginSteps("kareem@outlook.com", "asdzxc");
         loginPage.loginBtn();
     }
 
     @When("user enters valid search query")
-    public void EnterSearchQuery(){
+    public void EnterSearchQuery() {
+        searchPage = new SearchPage(base.getDriver());
         searchPage.searchTfElement.sendKeys("shoes");
         searchPage.searchTfElement.sendKeys(Keys.ENTER);
     }
+
     @When("user enter less than 3 character in search field")
-    public void EnterInvalidSearchQuery(){
+    public void EnterInvalidSearchQuery() {
+        searchPage = new SearchPage(base.getDriver());
         searchPage.searchTfElement.sendKeys("s");
         searchPage.searchTfElement.sendKeys(Keys.ENTER);
     }
+
     @Then("user should see results in table of items")
-    public void ShowQueryItems(){
+    public void ShowQueryItems() {
+        searchPage = new SearchPage(base.getDriver());
 
         String expectedResult = "Search";
         String actualResult = searchPage.searchTitleElement.getText();
@@ -58,15 +59,13 @@ public class SearchSteps {
     }
 
     @Then("error message should be displayed")
-    public void ErrorMessageDisplayed(){
+    public void ErrorMessageDisplayed() {
 
         String expectedResult = "Search term minimum length is 3 characters";
         String actualResult = searchPage.errorSerchMsg.getText();
 
         Assert.assertEquals(actualResult, expectedResult);
     }
-
-
 
 
 }

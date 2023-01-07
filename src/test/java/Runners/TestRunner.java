@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
         monochrome = true,
         features = "src\\main\\resources\\Features",
         glue = "StepsDefinition",
-        tags = "@login",
+        tags = "@filterWithColor",
         plugin = {"json:target/cucumber.json"}
 )
 

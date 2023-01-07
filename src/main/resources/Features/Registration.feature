@@ -1,14 +1,14 @@
-@regression
+@registration
 Feature: user should be able to register to e-commerce website
 
 
   Scenario: user enters valid data for registration
-    When user enters valid data "kareem"and"adel"and"koko@hotmail.com"and"company"and"123456"and"123456"
+    When user enters valid data "kareem"and"adel"and"kiki@hotmail.com"and"company"and"123456"and"123456"
     And user click on register button
     Then success message should be displayed
 
   Scenario: user enter duplicate email
-    When user enters valid data "kareem"and"adel"and"koko@hotmail.com"and"company"and"123456"and"123456"
+    When user enters valid data "kareem"and"adel"and"kiki@hotmail.com"and"company"and"123456"and"123456"
     And user click on register button
     Then duplicate email message appears
 

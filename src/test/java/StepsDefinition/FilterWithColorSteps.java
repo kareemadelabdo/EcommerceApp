@@ -1,5 +1,6 @@
 package StepsDefinition;
 
+import Helper.BaseClass;
 import Pages.FilterWithColorPage;
 import Pages.SelectCategoryPage;
 import io.cucumber.java.After;
@@ -11,30 +12,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class FilterWithColorSteps {
 
-    WebDriver driver = null;
+    WebDriver driver;
     FilterWithColorPage filterWithColorPage;
 
+    BaseClass base;
 
-    @Given("user should navigate to website")
-    public void UserNavigateToLoginPage() {
-        String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", chromePath);
-        driver = new ChromeDriver();
-        filterWithColorPage = new FilterWithColorPage(driver);
-
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demo.nopcommerce.com/");
+    public FilterWithColorSteps(BaseClass base) {
+        this.base = base;
     }
-
-    @When("user should hover on apparel then click on choose")
+    
+    @Given("user should hover on apparel then click on choose")
     public void UserChooseItem() {
 
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/");
+        filterWithColorPage = new FilterWithColorPage(base.getDriver());
         filterWithColorPage.selectItem();
     }
 
     @Then("user should be able to choose color")
     public void UserChooseColor() {
-
+        filterWithColorPage = new FilterWithColorPage(base.getDriver());
         filterWithColorPage.ChooseColor();
     }
 

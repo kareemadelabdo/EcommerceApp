@@ -1,5 +1,6 @@
 package StepsDefinition;
 
+import Helper.BaseClass;
 import Pages.LoginPage;
 import Pages.RegistrationPage;
 import Pages.ResetPasswordPage;
@@ -17,8 +18,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.security.Key;
 
 public class ResetPasswordSteps {
-    WebDriver driver = null;
+    WebDriver driver;
     ResetPasswordPage resetPasswordPage;
+
+    BaseClass base;
+
+    public ResetPasswordSteps(BaseClass base) {
+        this.base = base;
+    }
 
     @Given("user should open browser and navigate to reset password page")
     public void NavigateToResetPasswordPage() {
@@ -31,34 +38,38 @@ public class ResetPasswordSteps {
         driver.navigate().to("https://demo.nopcommerce.com/passwordrecovery");
     }
 
-    @When("user enter valid email and click on recover")
+    @Given("user enter valid email and click on recover")
     public void ValidEmail() {
-
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/passwordrecovery");
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         resetPasswordPage.emailElement.sendKeys("kareem@outlook.com");
         resetPasswordPage.emailElement.sendKeys(Keys.ENTER);
     }
-    @When("user enter empty email")
+    @Given("user enter empty email")
     public void EmptyEmail() {
-
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/passwordrecovery");
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         resetPasswordPage.emailElement.sendKeys("");
         resetPasswordPage.emailElement.sendKeys(Keys.ENTER);
     }
-    @When("user enter wrong email not saved in system database")
+    @Given("user enter wrong email not saved in system database")
     public void WrongEmail() {
-
-        resetPasswordPage.emailElement.sendKeys("kareem@outlook.com");
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/passwordrecovery");
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
+        resetPasswordPage.emailElement.sendKeys("kareesdm@outlook.com");
         resetPasswordPage.emailElement.sendKeys(Keys.ENTER);
     }
-    @When("user enter email with wrong format")
+    @Given("user enter email with wrong format")
     public void WrongEmailFormat() {
-
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/passwordrecovery");
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         resetPasswordPage.emailElement.sendKeys("kareem");
         resetPasswordPage.emailElement.sendKeys(Keys.ENTER);
     }
 
     @Then("success message should appear to user")
     public void Success() {
-
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         String actualResult = "Email with instructions has been sent to you.";
         String expectedResult = resetPasswordPage.successMessage.getText();
         Assert.assertEquals(actualResult, expectedResult);
@@ -66,7 +77,7 @@ public class ResetPasswordSteps {
 
     @Then("message displayed stating that email is empty")
     public void EmptyEmailError() {
-
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         String actualResult = "Enter your email";
         String expectedResult = resetPasswordPage.emptyEmailError.getText();
         Assert.assertEquals(actualResult, expectedResult);
@@ -74,14 +85,14 @@ public class ResetPasswordSteps {
 
     @Then("message should be displayed stating that email not found")
     public void WrongEmailError() {
-
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         String actualResult = "Email not found.";
         String expectedResult = resetPasswordPage.wrongEmailError.getText();
         Assert.assertEquals(actualResult, expectedResult);
     }
     @Then("message displayed stating that email is in wrong format")
     public void WrongEmailFormatError() {
-
+        resetPasswordPage = new ResetPasswordPage(base.getDriver());
         String actualResult = "Wrong email";
         String expectedResult = resetPasswordPage.emailFormatError.getText();
         Assert.assertEquals(actualResult, expectedResult);

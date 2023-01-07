@@ -1,40 +1,34 @@
 package StepsDefinition;
 
+import Helper.BaseClass;
 import Pages.LoginPage;
-import Pages.RegistrationPage;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginSteps {
 
-    WebDriver driver = null;
+    WebDriver driver;
     LoginPage loginPage;
+    BaseClass base;
 
-
-    @Before
-    public void OpenHomeLogin() {
-        String chromePath = System.getProperty("user.dir") + "\\src\\main\\resources\\chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", chromePath);
-
-        driver = new ChromeDriver();
-        loginPage = new LoginPage(driver);
-        driver.manage().window().maximize();
-        driver.navigate().to("https://demo.nopcommerce.com/login?returnUrl=%2F");
+    public LoginSteps(BaseClass base) {
+        this.base = base;
     }
 
-    @And("user enters credentials")
+    @When("user enters credentials")
     public void LoginCredentials() {
+        loginPage = new LoginPage(base.getDriver());
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/login?returnUrl=%2F");
         loginPage.loginSteps("kareem@outlook.com", "asdzxc");
         loginPage.loginBtn();
     }
-    @And("user enters invalid credentials")
+
+    @When("user enters invalid credentials")
     public void invalidLoginCredentials() {
+        loginPage = new LoginPage(base.getDriver());
+        base.getDriver().navigate().to("https://demo.nopcommerce.com/login?returnUrl=%2F");
         loginPage.loginSteps("kareemqd@outlook.com", "123456");
         loginPage.loginBtn();
     }
@@ -52,16 +46,10 @@ public class LoginSteps {
     @Then("login successfully with valid data")
     public void LoginSuccessful() {
 
-        String actualResult = driver.getCurrentUrl();
+        String actualResult = base.getDriver().getCurrentUrl();
         String expectedResult = "https://demo.nopcommerce.com/";
 
         Assert.assertEquals(actualResult, expectedResult);
-    }
-
-    @After
-    public void CloseBrowserLogin(){
-
-        driver.quit();
     }
 
 }
